@@ -31,6 +31,12 @@ export function Navbar() {
             <Link href="/blogs" className="hover:underline">
               Blogs
             </Link>
+            <Link href="/about" className="hover:underline">
+              About
+            </Link>
+            <Link href="/contact" className="hover:underline">
+              Contact
+            </Link>
           </div>
           <ThemeToggle />
         </div>

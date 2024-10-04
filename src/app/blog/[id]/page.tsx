@@ -1,34 +1,81 @@
-// app/blog/[id]/page.tsx
-import { blogData } from "@/components/BlogsCards";
-import Image from "next/image";
+"use client";
 
-// Define an interface for the params
-interface Params {
-  id: string;
+import Image from "next/image";
+import { Fragment, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
+
+// Define an interface for the blog data
+interface Blog {
+  _id: string;
+  title: string;
+  desc: string;
+  createdAt: string;
+  author: string;
+  content: string;
+  image: string;
+  tags: string[];
 }
 
-function SingleBlog({ params }: { params: Params }) {
-  const { id } = params;
+interface Params {
+  params: {
+    id: string;
+  };
+}
 
-  const blogPost = blogData.find((blog) => blog.id.toString() === id);
+function SingleBlog({ params }: Params) {
+  const { id } = params;
+  const [blogPost, setBlogPost] = useState<Blog | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const response = await fetch(`/api/blogs/${id}`);
+        if (!response.ok) {
+          throw new Error("Blog post not found");
+        }
+        const data = await response.json();
+        setBlogPost(data.blog);
+        console.log(data.blog);
+      } catch (err) {
+        setError("Failed to fetch the blog");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, [id]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   if (!blogPost) {
     return <div>Blog post not found</div>;
   }
-  const { tags, image, title, description, date, author, content } = blogPost;
+
+  const { tags, image, title, desc, createdAt, author, content } = blogPost;
+
+  const date = new Date(createdAt).toLocaleString();
+
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
       <div className="flex items-center justify-center">
         <div className="relative h-[500px] w-[100%]">
-          {" "}
-          {/* Set to 80% width */}
           <Image
             src={image}
             alt={title}
             priority
-            layout="fill" // This allows the image to fill the parent div
-            objectFit="cover" // Ensures the image covers the parent without distortion
-            className="rounded-lg" // Optional: adds rounded corners
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg"
           />
         </div>
       </div>
@@ -36,21 +83,23 @@ function SingleBlog({ params }: { params: Params }) {
         {title}{" "}
         <span className="mt-1 text-sm text-gray-500">(Created at {date})</span>
       </h1>
-      <p className="mt-2 text-lg">{description}</p>
+      <p className="mt-2 text-lg">{desc}</p>
       <p className="mt-1 text-sm text-gray-500">By {author}</p>
-      <p className="mt-1 ">{content}</p>
-      <p className="mt-1 text-sm text-gray-500"></p>
-      <div>
-        {tags.map((tag) => {
-          return (
-            <span
-              className="mb-2 mr-2 rounded bg-blue-200 px-2.5 py-0.5 text-sm font-medium text-blue-800"
-              key={tag}
-            >
-              {tag}
-            </span>
-          );
-        })}
+      <p className="mt-4">{content}</p>
+      {}
+      <div className="mt-4">
+        {tags.map((tag) => (
+          <Fragment>
+            {tag.split(" ").map((item) => (
+              <span
+                className="mb-2 mr-2 rounded bg-blue-200 px-2.5 py-0.5 text-sm font-medium text-blue-800"
+                key={tag}
+              >
+                {item}
+              </span>
+            ))}
+          </Fragment>
+        ))}
       </div>
     </section>
   );
