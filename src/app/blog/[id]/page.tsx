@@ -64,6 +64,16 @@ function SingleBlog({ params }: Params) {
 
   const date = new Date(createdAt).toLocaleString();
 
+  // Function to render text with line breaks
+  const renderTextWithLineBreaks = (text: string) => {
+    return text.split("\n").map((line, index) => (
+      <span key={index}>
+        {line}
+        <br />
+      </span>
+    ));
+  };
+
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
       <div className="flex items-center justify-center">
@@ -82,13 +92,12 @@ function SingleBlog({ params }: Params) {
         {title}{" "}
         <span className="mt-1 text-sm text-gray-500">(Created at {date})</span>
       </h1>
-      <p className="mt-2 text-lg">{desc}</p>
+      <p className="mt-2 text-lg">{renderTextWithLineBreaks(desc)}</p>
       <p className="mt-1 text-sm text-gray-500">By {author}</p>
-      <p className="mt-4">{content}</p>
-      {}
+      <p className="mt-4">{renderTextWithLineBreaks(content)}</p>
       <div className="mt-4">
         {tags.map((tag, index) => (
-          <Fragment key={index}>
+          <div className="flex flex-wrap" key={index}>
             {tag.split(" ").map((item, i) => (
               <span
                 className="mb-2 mr-2 rounded bg-blue-200 px-2.5 py-0.5 text-sm font-medium text-blue-800"
@@ -97,7 +106,7 @@ function SingleBlog({ params }: Params) {
                 {item}
               </span>
             ))}
-          </Fragment>
+          </div>
         ))}
       </div>
     </section>

@@ -64,7 +64,11 @@ export function BlogsCards() {
                 <CardTitle className="mt-4 text-2xl">{blog.title}</CardTitle>
               </CardHeader>
               <CardContent className="flex-grow text-gray-700">
-                <p>{blog.desc}</p>{" "}
+                <p className="line-clamp-3">{blog.desc}</p>{" "}
+                <Link href={`/blog/${blog._id}`}>
+                  {" "}
+                  <u>Read More</u>
+                </Link>
                 {/* Use the 'desc' field for the description */}
               </CardContent>
               <CardFooter className="flex items-center justify-between">
