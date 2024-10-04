@@ -38,7 +38,6 @@ function SingleBlog({ params }: Params) {
         }
         const data = await response.json();
         setBlogPost(data.blog);
-        console.log(data.blog);
       } catch (err) {
         setError("Failed to fetch the blog");
       } finally {
@@ -88,12 +87,12 @@ function SingleBlog({ params }: Params) {
       <p className="mt-4">{content}</p>
       {}
       <div className="mt-4">
-        {tags.map((tag) => (
-          <Fragment>
-            {tag.split(" ").map((item) => (
+        {tags.map((tag, index) => (
+          <Fragment key={index}>
+            {tag.split(" ").map((item, i) => (
               <span
                 className="mb-2 mr-2 rounded bg-blue-200 px-2.5 py-0.5 text-sm font-medium text-blue-800"
-                key={tag}
+                key={i}
               >
                 {item}
               </span>

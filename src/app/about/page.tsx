@@ -10,7 +10,7 @@ function About() {
         </h2>
         <p className="text-[20px] font-normal text-[#717171] md:text-[24px]">
           An Instagram Video Downloader is an online tool that allows users to
-          download Instagram videos directly to their devices. It's
+          download Instagram videos directly to their devices. It&apos;s
           user-friendly, requires no installation, and is compatible with mobile
           phones, tablets, and computers. Save your favorite content and watch
           it anytime, even offline!
@@ -29,11 +29,11 @@ function About() {
             available.
           </li>
           <li>
-            🔗 <b>Simple URL Input</b>: Just paste the video URL, and we’ll do
-            the rest!
+            🔗 <b>Simple URL Input</b>: Just paste the video URL, and we&apos;ll
+            do the rest!
           </li>
           <li>
-            📱 <b>Device Compatibility </b>: Works on any device—be it a
+            📱 <b>Device Compatibility</b>: Works on any device—be it a
             smartphone, tablet, or computer.
           </li>
           <li>
@@ -47,7 +47,7 @@ function About() {
         </ul>
         <p className="text-[20px] font-normal text-[#717171] md:text-[24px]">
           Join thousands of users who have made the switch to our Instagram
-          Video Downloader. Whether it's for entertainment, education, or
+          Video Downloader. Whether it&apos;s for entertainment, education, or
           inspiration, you can now have your favorite videos at your fingertips!
         </p>
       </div>
